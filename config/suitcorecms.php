@@ -51,14 +51,10 @@ return [
                 ],
                 'Proyek' => [
                     'route'   => 'cms.project.index',
-                    'icon'    => 'flaticon-home',
+                    'icon'    => 'la la-wrench',
                 ],
-                // 'Media Library' => [
-                //     'route' => 'cms.medialibrary.index',
-                //     'icon' => 'flaticon-attachment',
-                // ],
                 'Data Master' => [
-                    'icon' => 'flaticon-database',
+                    'icon' => 'la la-server',
                     'submenus' => [
                         'Propinsi' => [
                             'route' => 'cms.province.index',

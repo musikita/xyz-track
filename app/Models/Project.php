@@ -22,4 +22,26 @@ class Project extends Model
         'total_member',
         'status',
     ];
+
+    protected $dates = [
+        'start_date', 'end_date',
+    ];
+
+    protected $casts = [
+        'divisions' => 'array',
+    ];
+
+    public function rules($method)
+    {
+        return [
+            'name' => 'required',
+            'province' => 'required',
+            'city' => 'required',
+            'start_date' => 'required',
+            'divisions' => 'required',
+            'total_segment' => 'required',
+            'plan_total_day' => 'required',
+            'plan_total_budget' => 'required',
+        ];
+    }
 }

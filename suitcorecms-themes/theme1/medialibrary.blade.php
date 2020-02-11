@@ -1,0 +1,1 @@
+@extends('suitcorecms::template')

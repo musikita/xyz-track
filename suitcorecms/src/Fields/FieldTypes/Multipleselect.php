@@ -48,13 +48,29 @@ class Multipleselect extends BasicField
     {
         $name = $this->attributes['name'];
 
-        return $model
-                ->{$name}
+        $value = $model->{$name};
+        $options = $this->attributes['options'];
+        if (is_callable($options)) {
+            $options = call_user_func_array($options, []);
+        }
+        if (!$this->attributes['relation']) {
+            $value = is_array($value) ? $value : (array) $value;
+            $value = collect($value)->map(function ($item) use ($options) {
+                $it['name'] = $options[$item] ?? $item;
+
+                return $it;
+            });
+        }
+
+        return
+            $value instanceof Collection
+            ? $value
                 ->pluck('name')
                 ->map(function ($item) {
                     return '<span class="kt-badge kt-badge--xl kt-badge--unified-dark kt-badge--inline mb-1">'.$item.'</span>';
                 })
-                ->implode(' ');
+                ->implode(' ')
+            : null;
     }
 
     public function formBuild($builder, $value = [], $newName = null)

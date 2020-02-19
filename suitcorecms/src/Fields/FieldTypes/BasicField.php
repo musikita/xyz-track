@@ -148,8 +148,8 @@ class BasicField
         $input = $attributes['input'] ?? null;
         $output = $attributes['output'] ?? null;
         $relation = $attributes['relation'] ?? null;
-        if ($this->attributes['value'] ?? false) {
-            $value = $this->attributes['value'];
+        if ($attributes['value'] ?? false) {
+            $value = $attributes['value'];
         }
         if ($attributes['no_template'] ?? false) {
             $no_template = true;

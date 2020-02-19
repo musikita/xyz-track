@@ -37,6 +37,10 @@ class Richtext extends BasicField
 
     public function formJavascript()
     {
-        return config('suitcorecms.fields.richtext.form.javascript');
+        if (!defined('RICHTEXT_FORM_JS')) {
+            define('RICHTEXT_FORM_JS', true);
+
+            return config('suitcorecms.fields.richtext.form.javascript');
+        }
     }
 }

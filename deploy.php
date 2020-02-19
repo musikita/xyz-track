@@ -7,7 +7,7 @@ require 'recipe/laravel.php';
 set('application', 'bawantracking');
 
 // Project repository
-set('repository', 'git@github.com:mrofi/tracking.git');
+set('repository', 'git@github.com:musikita/xyz-track.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
@@ -22,7 +22,7 @@ set('allow_anonymous_stats', false);
 
 // Hosts
 
-host('mager')
+host('cisa')
     ->set('deploy_path', '/var/www/html/{{application}}');
 
 // Tasks

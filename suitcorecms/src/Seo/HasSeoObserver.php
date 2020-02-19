@@ -8,11 +8,12 @@ class HasSeoObserver
 {
     public function saved($model)
     {
-        $meta = request($model->getSeoField());
-        $this->fillImage($meta, $model);
-        $seoData = $model->seoData ?? new Model();
-        $seoData->fill(compact('meta'));
-        $model->seoData()->save($seoData);
+        if (null !== ($meta = request($model->getSeoField()))) {
+            $this->fillImage($meta, $model);
+            $seoData = $model->seoData ?? new Model();
+            $seoData->fill(compact('meta'));
+            $model->seoData()->save($seoData);
+        }
     }
 
     protected function fillImage(&$meta, $model)

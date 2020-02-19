@@ -26,9 +26,11 @@ trait ResourceRequestTrait
 
     protected function arrayableRules($rules)
     {
-        $rules = is_array($rules) ? $rules : explode('|', $rules);
+        $rules = is_array($rules) ? $rules : (is_string($rules) ? explode('|', $rules) : [$rules]);
 
-        return array_filter(array_map('trim', $rules));
+        return array_filter(array_map(function ($item) {
+            return is_string($item) ? trim($item) : $item;
+        }, $rules));
     }
 
     protected function ruleMerge($rules, $addrules)

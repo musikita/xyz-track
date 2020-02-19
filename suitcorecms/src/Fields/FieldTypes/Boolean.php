@@ -2,6 +2,8 @@
 
 namespace Suitcorecms\Fields\FieldTypes;
 
+use Illuminate\Support\Arr;
+
 class Boolean extends Checkbox
 {
     protected $attributes = [
@@ -32,6 +34,6 @@ class Boolean extends Checkbox
 
     public function formInput($value, $request)
     {
-        return (bool) array_first((array) $value);
+        return (bool) Arr::first((array) $value);
     }
 }

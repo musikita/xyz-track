@@ -118,4 +118,16 @@ trait ResourceShowTrait
 
         return $this->showJavascript = implode("\n", $javascript);
     }
+
+    public function showAsArray()
+    {
+        $array = [];
+        foreach ($fields = $this->fields('show') as $field) {
+            $title = $field['title'];
+            $value = $this->getShowValue($field);
+            $array[$title] = $value;
+        }
+
+        return $array;
+    }
 }

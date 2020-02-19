@@ -17,7 +17,7 @@
                     <h3 class="kt-portlet__head-title">
 {{$childResource->getCaption()}}
                         <small class="kt-hidden-mobile">
-{{array_last($breadcrumb->getItems())}}
+{{\Illuminate\Support\Arr::last($breadcrumb->getItems())}}
                         </small>
                     </h3>
                 </div>

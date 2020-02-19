@@ -8,6 +8,20 @@ use App\Models\Province;
 
 class ProjectController extends Controller
 {
+    public function show($id)
+    {
+        $resource = $this->prepResource('show', $id);
+        $project_id = $id;
+        $model = $resource->getResourceable();
+
+        $resource
+            ->addChild(app(ProjectTaskController::class)->setBaseRoute('cms.project.task')->setDefaultQueryParameters(compact('project_id'))->prepResource('index'));
+
+        $this->showBreadcrumb($resource, [null => $resource->getCaption()]);
+
+        return $this->view(compact('resource'));
+    }
+
     public function fields($method)
     {
         return [
@@ -65,6 +79,9 @@ class ProjectController extends Controller
 
     public function getDivisionOptions()
     {
-        return Division::get()->pluck('name', 'number')->toArray();
+        return Division::get()->map(function ($item) {
+            $item->name = $item->number.'. '.$item->name;
+            return $item;
+        })->pluck('name', 'number')->toArray();
     }
 }

@@ -25,6 +25,7 @@ abstract class Controller extends BaseController
     use ViewTrait;
 
     protected static $registeredObserver = false;
+    protected $prepedResources = [];
     protected $redirectTo;
 
     public function __construct()
@@ -68,7 +69,12 @@ abstract class Controller extends BaseController
             $this->addDeleteButton($resource);
         }
 
-        return $resource;
+        return $this->prepedResources[$method] = $resource;
+    }
+
+    public function getPrepedResource($method)
+    {
+        return $this->prepedResources[$method] ?? null;
     }
 
     protected function showBreadcrumb($resource, array $items = [], array $lead = [])

@@ -24,7 +24,7 @@
 
     <div class="pull-right">
         @if ($childResource->routeExist('export-csv'))
-        <a href="{{$childResource->route('export-csv')}}" class="btn btn-warning  btn-sm btn-icon-h">
+        <a href="{{$childResource->route('export-csv')}}" class="btn btn-warning  btn-sm btn-icon-h btn-export-csv">
             Export CSV &nbsp;
             <i class="fa fa-file-csv"></i>
         </a>
@@ -80,6 +80,16 @@
                 $(obj).closest('table').find('.datatables-checkbox').prop('checked', false).trigger('change');
             }
         }
+
+        $('table.dataTable').on('draw', function () {
+            console.log('draw');
+            // .dataTable().api();
+                // var $api = this.api();
+                if (! $(this).data().count()) {
+                    $(this).closest(`.kt-portlet__body`).find(`.btn-export-csv`).addClass(`disabled`);
+                }
+
+        })
     })(jQuery);
 </script>
 @endpush

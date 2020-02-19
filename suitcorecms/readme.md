@@ -19,6 +19,11 @@ Do `composer require` to accomplish that.
 - [spatie/laravel-permission](https://github.com/spatie/laravel-permission)
 - [spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog)
 
+With this command :
+```shell
+composer require yajra/laravel-datatables-oracle yajra/laravel-datatables-html spatie/laravel-medialibrary proengsoft/laravel-jsvalidation cviebrock/eloquent-sluggable maatwebsite/excel spatie/laravel-permission spatie/laravel-activitylog
+```
+
 ## How To Install
 - After installing laravel.
 - Go to project directory
@@ -144,19 +149,24 @@ Or if you want create new guard with name `cms` you can update your `config/auth
 ## CMS Auth
 After registering new guard, then you can define you authentication in your cms.
 
+In `Auth\LoginController` add trait `use Suitcorecms\Authentications\AuthenticationTrait;`
+
 In file `routes/web.php` add this code :
 ```php
 // routes/web.php
 
+if (! defined('CMS_PREFIXURL')) {
+    define('CMS_PREFIXURL', config('suitcorecms.prefix_url'));
+}
+
 Route::middleware(['guest:cms'])->group(function () {
     // CMS Auth
-    Route::get('/paneladmin/login', 'Auth\LoginController@cmsLoginForm')->name('cms.login');
-    Route::post('/paneladmin/login', 'Auth\LoginController@cmsLogin')->name('cms.login.login');
+    Route::get(CMS_PREFIXURL.'/login', 'Auth\LoginController@cmsLoginForm')->name('cms.login');
+    Route::post(CMS_PREFIXURL.'/login', 'Auth\LoginController@cmsLogin')->name('cms.login.login');
 });
 
 Route::middleware(['auth:cms'])->group(function () {
-    Route::get('/paneladmin', 'Cms\DashboardController@index')->name('cms.index');
-    Route::get('/paneladmin/logout', 'Auth\LoginController@cmsLogout')->name('cms.logout');
+    Route::get(CMS_PREFIXURL.'/logout', 'Auth\LoginController@cmsLogout')->name('cms.logout');
 });
 
 ```

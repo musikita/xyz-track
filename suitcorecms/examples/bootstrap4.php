@@ -23,10 +23,10 @@
                     }
                 },
 
-                <?php if (isset($validator['ignore']) && is_string($validator['ignore'])): ?>
+                <?php if (isset($validator['ignore']) && is_string($validator['ignore'])) { ?>
 
                 ignore: "<?= $validator['ignore']; ?>",
-                <?php endif; ?>
+                <?php } ?>
 
 
                 unhighlight: function(element) {
@@ -47,7 +47,7 @@
                 },
 
                 focusInvalid: false, // do not focus the last invalid input
-                <?php if (Config::get('jsvalidation.focus_on_error')): ?>
+                <?php if (Config::get('jsvalidation.focus_on_error')) { ?>
                 invalidHandler: function (form, validator) {
 
                     if (!validator.numberOfInvalids())
@@ -64,7 +64,7 @@
                     $(validator.errorList[0].element).focus();
 
                 },
-                <?php endif; ?>
+                <?php } ?>
 
                 rules: <?= json_encode($validator['rules']); ?>
             }));

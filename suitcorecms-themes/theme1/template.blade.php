@@ -321,6 +321,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <script>
         {!! show_cms_notification_messages() !!}
+        {!! \Suitcorecms\Excel\View::javascript() !!}
         </script>
 
         <!--begin::Page Vendors(used by this page) -->

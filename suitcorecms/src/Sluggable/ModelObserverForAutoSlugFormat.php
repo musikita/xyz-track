@@ -18,4 +18,12 @@ class ModelObserverForAutoSlugFormat
             $model->slug = Str::slug($model->slug);
         }
     }
+
+    public function deleted($model)
+    {
+        if ($model->exists) {
+            $model->slug = Str::limit($model->slug.'-'.uniqid(), 200, '');
+            $model->save();
+        }
+    }
 }

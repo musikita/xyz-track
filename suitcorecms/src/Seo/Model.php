@@ -45,8 +45,8 @@ class Model extends BaseModel implements Resourceable
     public function createSeoMediaConversion($model)
     {
         $model->addMediaConversion('seo')
-            ->width(config('suitcorecms.seo.image_width', 300))
-            ->height(config('suitcorecms.seo.image_height', 300));
+            ->width(config('suitcorecms.seo.image_width', 800))
+            ->height(config('suitcorecms.seo.image_height', 800));
     }
 
     public function getMediaFields()

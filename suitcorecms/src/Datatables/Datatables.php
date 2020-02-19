@@ -189,7 +189,7 @@ HTML;
             $callbacks[] = $js;
         }
         if ($callback = $parameters['drawCallback'] ?? false) {
-            $callbacks[] = '('.$callback.')()';
+            $callbacks[] = '('.$callback.')(this)';
         }
         $parameters['drawCallback'] = 'function() {'."\n".implode("\n", $callbacks)."\n".'}';
 

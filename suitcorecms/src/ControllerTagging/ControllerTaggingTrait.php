@@ -34,19 +34,29 @@ trait ControllerTaggingTrait
         return $this->taggingPrepResource($method, $id);
     }
 
+    protected function getLastUriName($routeName)
+    {
+        $uris = array_reverse(explode('.', $routeName));
+        array_shift($uris);
+
+        return $uris[0];
+    }
+
     protected function showBreadcrumb($resource, array $items = [], array $lead = [])
     {
         $tag = static::$tag;
         $taggingModel = $tag;
         $taggingModelField = $taggingModel ? (method_exists($taggingModel, 'getTaggingField') ? $taggingModel->getTaggingField() : null) : null;
         $taggingModelValue = $taggingModelField ? $taggingModel->{$taggingModelField} : null;
+        $uri = $this->getLastUriName($this->baseRedirectRoute);
 
-        $index = $lead + [route(str_replace('.show', '.index', $this->baseRedirectRoute), array_filter([$taggingModelField => $taggingModelValue])) => $tag->getName(), route($this->baseRedirectRoute, array_filter(['id' => $tag->id, $taggingModelField => $taggingModelValue])) => $tag->getCaption()];
+        $index = $lead + [route(str_replace('.show', '.index', $this->baseRedirectRoute), array_filter([$taggingModelField => $taggingModelValue])) => $tag->getName(), route($this->baseRedirectRoute, array_filter([$uri => $tag->id, $taggingModelField => $taggingModelValue])) => $tag->getCaption()];
         $items = array_merge($index, ($resource->routeExist('index')
                     ? [$resource->routeIndex() => $resource->getName()]
                     : []
                 ) + $items);
         $breadcrumb = new Breadcrumb(url()->current(), $items);
+
         view()->share(compact('breadcrumb'));
     }
 
@@ -73,8 +83,9 @@ trait ControllerTaggingTrait
         $taggingModel = $this->baseResourceable();
         $taggingModelField = $taggingModel ? (method_exists($taggingModel, 'getTaggingField') ? $taggingModel->getTaggingField() : null) : null;
         $taggingModelValue = $taggingModelField ? $taggingModel->{$taggingModelField} : null;
+        $uri = $this->getLastUriName($this->baseRedirectRoute);
 
-        return route($this->baseRedirectRoute, array_filter(['id' => request($this->tagging_id, static::$tag->id ?? null), $taggingModelField => $taggingModelValue]))."#_{$hash}_";
+        return route($this->baseRedirectRoute, array_filter([$uri => request($this->tagging_id, static::$tag->id ?? null), $taggingModelField => $taggingModelValue]))."#_{$hash}_";
     }
 
     public function taggingFields(array $fields = [])

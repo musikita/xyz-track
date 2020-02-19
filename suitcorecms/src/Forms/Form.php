@@ -155,7 +155,7 @@ class Form
                 : (method_exists($this->model, 'rules') ? $this->model->rules($this->method) : [])
             ) ?? [];
 
-        return $fieldName ? ($rules[$fieldName] ?? null) : $rules;
+        return $fieldName !== null ? ($rules[$fieldName] ?? null) : $rules;
     }
 
     protected function updateTitle($fieldName, $title)
@@ -249,11 +249,12 @@ class Form
             if ($build = $field['build'] ?? false) {
                 $obj = $build[0];
                 if (!isset($javascript[$type = $field['type']])) {
-                    if (is_callable($js = $field['javascript'] ?? false)) {
-                        $javascript[$type] = call_user_func_array($js, []);
-                    } elseif (method_exists($obj, 'formJavascript')) {
+                    if (method_exists($obj, 'formJavascript')) {
                         $javascript[$type] = $obj->formJavascript();
                     }
+                }
+                if (is_callable($js = $field['javascript'] ?? false)) {
+                    $javascript[] = call_user_func_array($js, []);
                 }
             }
         }

@@ -158,6 +158,11 @@ return [
                 'javascript' => '
                     tinymce.init({
                         selector: `[richtext]`,
+                        setup: function (editor) {
+                            editor.on(`init change`, function () {
+                                editor.save();
+                            });
+                        },
                         plugins : `autoresize advlist autolink link image lists charmap print preview lists code`,
                         toolbar: `undo redo | styleselect | bold italic underline | numlist bullist | link image code`,
                         autoresize_on_init: false,

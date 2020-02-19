@@ -13,7 +13,7 @@ class Select extends BasicField
         if ($this->attributes['relation']) {
             $value = $model;
             foreach (explode('.', $column) as $rel) {
-                $value = $value->{$rel};
+                $value = $value->{$rel} ?? null;
             }
 
             return $value;

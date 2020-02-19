@@ -4,7 +4,7 @@
         @foreach ($multiResources as $childResource)
             @if (view()->exists($childView = $childResource->getChildView()))
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#_{{ snake_case($childResource->getName(), '_') }}_" role="tab" aria-selected="false"><h5>{{strtoupper($childResource->getTitle() ?? $childResource->getName())}}</h5></a>
+                <a class="nav-link" data-toggle="tab" href="#_{{ \Illuminate\Support\Str::snake($childResource->getName(), '_') }}_" role="tab" aria-selected="false"><h5>{{strtoupper($childResource->getTitle() ?? $childResource->getName())}}</h5></a>
             </li>
             @endif
         @endforeach
@@ -13,7 +13,7 @@
     <div class="tab-content" style="margin-top: -2rem; margin-bottom: -2rem">
     @foreach ($multiResources as $childResource)
         @if (view()->exists($childView = $childResource->getChildView()))
-        <div class="tab-pane" id="_{{ snake_case($childResource->getName(), '_') }}_" role="tabpanel">
+        <div class="tab-pane" id="_{{ \Illuminate\Support\Str::snake($childResource->getName(), '_') }}_" role="tabpanel">
             @include($childView)
         </div>
         @endif

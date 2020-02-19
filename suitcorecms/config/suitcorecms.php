@@ -93,7 +93,7 @@ return [
                         <span></span>
                     </label>`;
             }',
-            'drawCallback' => 'function( settings ) {
+            'drawCallback' => 'function( dataTable ) {
                 $.DatatablesSelect = function (obj) {
                     if ($.BulkSelect) {
                         $.BulkSelect(obj);
@@ -103,6 +103,11 @@ return [
                     } else {
                         $(obj).parents(\'tr\').removeClass(\'selected\')
                     }
+                }
+
+                var $api = dataTable.api();
+                if (! $api.data().count()) {
+                    $(dataTable).closest(`.kt-portlet__body`).find(`.btn-export-csv`).addClass(`disabled`);
                 }
             }',
         ],
@@ -147,6 +152,11 @@ return [
                 'javascript' => '
                     tinymce.init({
                         selector: `[richtext]`,
+                        setup: function (editor) {
+                            editor.on(`init change`, function () {
+                                editor.save();
+                            });
+                        },
                         plugins : `autoresize advlist autolink link image lists charmap print preview lists code`,
                         toolbar: `undo redo | styleselect | bold italic underline | numlist bullist | link image code`,
                         autoresize_on_init: false,

@@ -13,3 +13,6 @@ CmsRoute::resource('project', 'ProjectController');
 CmsRoute::resource('province', 'ProvinceController');
 CmsRoute::resource('role', 'RoleController');
 CmsRoute::resource('task', 'TaskController');
+
+
+Suitcorecms\Excel\Route::routes();
